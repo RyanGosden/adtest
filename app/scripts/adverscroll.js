@@ -1,4 +1,4 @@
-(function() {
+(function(root) {
 
   var Adverscroll = function(config){
     //validation here?
@@ -73,11 +73,6 @@
 
   Adverscroll.init.prototype = Adverscroll.prototype;
 
-  var advert1 = Adverscroll({
-    id : "ad1",
-    image: "images/adverscroll.jpg",
-    url: "www.hsbc.com.mt",
-  });
-  advert1.apply();
+  root.Adverscroll = Adverscroll;
 
-})();
+})(window);
