@@ -1,24 +1,19 @@
 (function() {
 
-  var Adverscroll = function(id, img, url){
-    return new Adverscroll.init(id, img, url);
+  var Adverscroll = function(config){
+    //validation here?
+    return new Adverscroll.init(config);
   }
 
-  Adverscroll.init = function(id, img, url){
-    this.id = id || '';
-    this.image = img || '';
-    this.url = url || '';
-
-    this.createElements();
-    this.addMedia();
-    this.addUrl();
-
+  Adverscroll.init = function(config){
+    this.id = config.id || '';
+    this.image = config.image || '';
+    this.url = config.url || '';
   };
 
-  Adverscroll.init.prototype = Adverscroll.prototype;
-
-    Adverscroll.prototype.createElements = function(){
-      this.container = document.getElementById('inscroll-banner');
+  Adverscroll.prototype = {
+    createElements : function(){
+      this.container = document.getElementById(this.id);
 
       var inner = document.createElement("div");
       inner.setAttribute("class", "isb-banner-core");
@@ -40,36 +35,49 @@
       this.container.appendChild(inner);
       inner.appendChild(advert);
       this.container.appendChild(bottomLabel);
-    };
-    Adverscroll.prototype.addMedia = function(){
+    },
+    addMedia : function(){
       var container = document.getElementById("inscroll-banner");
       this.media = document.createElement("img");
       this.media.setAttribute("src", this.image);
       this.media.addEventListener("load", this.appendMedia.bind(this));
-    }
-    Adverscroll.prototype.addUrl = function(){
+    },
+    addUrl : function(){
       this.mediaUrl = document.createElement("a");
       this.mediaUrl.setAttribute("href", this.url);
       this.mediaUrl.setAttribute("target", "_blank");
       this.mediaUrl.setAttribute("class", "isb-link");
       this.advert.appendChild(this.mediaUrl);
     },
-    Adverscroll.prototype.appendMedia = function(){
+    appendMedia : function(){
         this.advert.appendChild(this.media);
         this.enableScrollEvent();
         this.render();
     },
-    Adverscroll.prototype.enableScrollEvent = function(){
+    enableScrollEvent : function(){
       document.body.onscroll = function() {
         this.render();
       }.bind(this);
     },
-    Adverscroll.prototype.render = function(){
+    render : function(){
       var pos = this.container.getBoundingClientRect();
       this.inner.style.clip =
         "rect(" + pos.top + "px,100vw," + pos.bottom + "px,0)";
-    }
+      },
+    apply : function(){
+        this.createElements();
+        this.addMedia();
+        this.addUrl();
+      }
+  };
 
-    var advert1 = Adverscroll("id1", "images/adverscroll.jpg", "www.google.com.mt");
+  Adverscroll.init.prototype = Adverscroll.prototype;
+
+  var advert1 = Adverscroll({
+    id : "ad1",
+    image: "images/adverscroll.jpg",
+    url: "www.hsbc.com.mt",
+  });
+  advert1.apply();
 
 })();
