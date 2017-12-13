@@ -1,13 +1,13 @@
 // @TODO
 // Validation
-// Colour of label
-// Fix multiple instances
 // Function to add attributes
+// Improve code
+
+// Fix multiple instances
 // Comments
 // Testing
 // Setup for html
 // Setup for video
-
 
 (function(root, factory) {
   if (typeof define === "function" && define.amd) {
@@ -19,21 +19,32 @@
   }
 })(window, function() {
   var Adverscroll = function(config) {
-    // Validation here
-    // Check typeof string
-    // Check that img and url are set.
-    // if not hide whole container!
+    // Accept only string values for config
+    for (const conf in config) {
+      if (typeof config[conf] !== "string") {
+        throw "Only strings are accepted in configuration.";
+      }
+    }
+    // Insure img and url are set
+    if (
+      typeof config.image === "undefined" ||
+      config.image.length <= 0 ||
+      (typeof config.url === "undefined" || config.url.length <= 0)
+    ) {
+      throw "Configuration requires image and URL";
+    }
+
     return new Adverscroll.init(config);
   };
 
   Adverscroll.init = function(config) {
-    this.id = config.id || 'adverscroll';
-    this.image = config.image || '';
-    this.url = config.url || '';
-    this.topLabelText = config.topLabelText || 'ADVERTISEMENT';
-    this.bottomLabelText = config.bottomLabelText || 'SCROLL TO CONTINUE';
-    this.labelBgColour = config.labelBgColour || '#222';
-    this.labelColour = config.labelColour || '#fff';
+    this.id = config.id || "adverscroll";
+    this.image = config.image || "";
+    this.url = config.url || "";
+    this.topLabelText = config.topLabelText || "ADVERTISEMENT";
+    this.bottomLabelText = config.bottomLabelText || "SCROLL TO CONTINUE";
+    this.labelBgColour = config.labelBgColour || "#222";
+    this.labelColour = config.labelColour || "#fff";
     this.marginTop = config.marginTop || 0;
   };
 
@@ -47,8 +58,8 @@
 
       var advert = document.createElement("div");
       advert.setAttribute("class", "isb-banner-advert");
-      if (this.marginTop!==0){
-        advert.style.marginTop=this.marginTop+'px';
+      if (this.marginTop !== 0) {
+        advert.style.marginTop = this.marginTop + "px";
       }
       this.advert = inner;
 

@@ -6,6 +6,6 @@ var advert1 = Adverscroll({
   bottomLabelText: "SCROLL TO CONTINUE",
   labelBgColour: "#222",
   labelColour: "#fff",
-  marginTop: 0,
+  marginTop: "0",
 });
 advert1.apply();
