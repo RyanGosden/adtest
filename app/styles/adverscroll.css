@@ -46,8 +46,6 @@
 .isb-inscroll-banner .isb-label {
     position: absolute;
     z-index: 9;
-    color: #fff;
-    background-color: #222;
     text-align: center;
     width: 100%;
     font-size: 14px;

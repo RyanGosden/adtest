@@ -1,3 +1,14 @@
+// @TODO
+// Validation
+// Colour of label
+// Fix multiple instances
+// Function to add attributes
+// Comments
+// Testing
+// Setup for html
+// Setup for video
+
+
 (function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(["adverscroll"], factory);
@@ -8,16 +19,21 @@
   }
 })(window, function() {
   var Adverscroll = function(config) {
-    //validation here?
+    // Validation here
+    // Check typeof string
+    // Check that img and url are set.
+    // if not hide whole container!
     return new Adverscroll.init(config);
   };
 
   Adverscroll.init = function(config) {
-    this.id = config.id || '';
+    this.id = config.id || 'adverscroll';
     this.image = config.image || '';
     this.url = config.url || '';
     this.topLabelText = config.topLabelText || 'ADVERTISEMENT';
     this.bottomLabelText = config.bottomLabelText || 'SCROLL TO CONTINUE';
+    this.labelBgColour = config.labelBgColour || '#222';
+    this.labelColour = config.labelColour || '#fff';
     this.marginTop = config.marginTop || 0;
   };
 
@@ -38,10 +54,14 @@
 
       var topLabel = document.createElement("div");
       topLabel.setAttribute("class", "isb-label isb-label-top");
+      topLabel.style.backgroundColor = this.labelBgColour;
+      topLabel.style.color = this.labelColour;
       topLabel.appendChild(document.createTextNode(this.topLabelText));
 
       var bottomLabel = document.createElement("div");
       bottomLabel.setAttribute("class", "isb-label isb-label-bottom");
+      bottomLabel.style.backgroundColor = this.labelBgColour;
+      bottomLabel.style.color = this.labelColour;
       bottomLabel.appendChild(document.createTextNode(this.bottomLabelText));
 
       this.container.appendChild(topLabel);
