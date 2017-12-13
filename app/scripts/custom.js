@@ -3,6 +3,8 @@ var advert1 = Adverscroll({
   image: "images/adverscroll.jpg",
   url: "www.hsbc.com.mt",
   topLabelText: "ADVERTISEMENT",
-  bottomLabelText: "SCROLL TO CONTINUE"
+  bottomLabelText: "SCROLL TO CONTINUE",
+  marginTop: 0,
+
 });
 advert1.apply();

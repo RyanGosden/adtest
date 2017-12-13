@@ -18,6 +18,7 @@
     this.url = config.url || '';
     this.topLabelText = config.topLabelText || 'ADVERTISEMENT';
     this.bottomLabelText = config.bottomLabelText || 'SCROLL TO CONTINUE';
+    this.marginTop = config.marginTop || 0;
   };
 
   Adverscroll.prototype = {
@@ -30,6 +31,9 @@
 
       var advert = document.createElement("div");
       advert.setAttribute("class", "isb-banner-advert");
+      if (this.marginTop!==0){
+        advert.style.marginTop=this.marginTop+'px';
+      }
       this.advert = inner;
 
       var topLabel = document.createElement("div");
