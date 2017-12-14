@@ -1,7 +1,4 @@
 // @TODO
-// Validation
-// Function to add attributes
-// Improve code
 
 // Fix multiple instances
 // Comments
@@ -19,6 +16,7 @@
   }
 })(window, function() {
   var Adverscroll = function(config) {
+    // Validation before creating object
     // Accept only string values for config
     for (const conf in config) {
       if (typeof config[conf] !== "string") {
@@ -28,8 +26,8 @@
     // Insure img and url are set
     if (
       typeof config.image === "undefined" ||
-      config.image.length <= 0 ||
-      (typeof config.url === "undefined" || config.url.length <= 0)
+      config.image.trim().length === 0 ||
+      (typeof config.url === "undefined" || config.url.trim().length === 0)
     ) {
       throw "Configuration requires image and URL";
     }
@@ -61,7 +59,7 @@
       if (this.marginTop !== 0) {
         advert.style.marginTop = this.marginTop + "px";
       }
-      this.advert = inner;
+      this.advert = advert;
 
       var topLabel = document.createElement("div");
       topLabel.setAttribute("class", "isb-label isb-label-top");
@@ -87,11 +85,11 @@
       this.media.addEventListener("load", this.appendMedia.bind(this));
     },
     addUrl: function() {
-      this.mediaUrl = document.createElement("a");
-      this.mediaUrl.setAttribute("href", this.url);
-      this.mediaUrl.setAttribute("target", "_blank");
-      this.mediaUrl.setAttribute("class", "isb-link");
-      this.advert.appendChild(this.mediaUrl);
+      var mediaUrl = document.createElement("a");
+      mediaUrl.setAttribute("href", this.url);
+      mediaUrl.setAttribute("target", "_blank");
+      mediaUrl.setAttribute("class", "isb-link");
+      this.advert.appendChild(mediaUrl);
     },
     appendMedia: function() {
       this.advert.appendChild(this.media);
