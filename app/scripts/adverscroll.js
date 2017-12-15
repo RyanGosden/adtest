@@ -27,7 +27,8 @@
     if (
       typeof config.image === "undefined" ||
       config.image.trim().length === 0 ||
-      (typeof config.url === "undefined" || config.url.trim().length === 0)
+      typeof config.url === "undefined" ||
+      config.url.trim().length === 0
     ) {
       throw "Configuration requires image and URL";
     }
@@ -36,6 +37,7 @@
   };
 
   Adverscroll.init = function(config) {
+
     this.id = config.id || "adverscroll";
     this.image = config.image || "";
     this.url = config.url || "";
@@ -47,6 +49,34 @@
   };
 
   Adverscroll.prototype = {
+    createLabels: function() {
+      var topLabel = document.createElement("div"),
+          bottomLabel = document.createElement("div"),
+          labels = [
+          {
+            el: topLabel,
+            class: "isb-label isb-label-top",
+            txt: this.topLabelText
+          },
+          {
+            el: bottomLabel,
+            class: "isb-label isb-label-bottom",
+            txt: this.bottomLabelText
+          }
+      ];
+
+      var createLabel = function(el, cls, txt) {
+        el.setAttribute("class", cls);
+        el.style.backgroundColor = this.labelBgColour;
+        el.style.color = this.labelColour;
+        el.appendChild(document.createTextNode(txt));
+        this.container.appendChild(el);
+      }.bind(this);
+
+      labels.forEach(function(label){
+          createLabel(label.el, label.class, label.txt);
+      });
+    },
     createElements: function() {
       this.container = document.getElementById(this.id);
 
@@ -60,30 +90,19 @@
         advert.style.marginTop = this.marginTop + "px";
       }
       this.advert = advert;
-
-      var topLabel = document.createElement("div");
-      topLabel.setAttribute("class", "isb-label isb-label-top");
-      topLabel.style.backgroundColor = this.labelBgColour;
-      topLabel.style.color = this.labelColour;
-      topLabel.appendChild(document.createTextNode(this.topLabelText));
-
-      var bottomLabel = document.createElement("div");
-      bottomLabel.setAttribute("class", "isb-label isb-label-bottom");
-      bottomLabel.style.backgroundColor = this.labelBgColour;
-      bottomLabel.style.color = this.labelColour;
-      bottomLabel.appendChild(document.createTextNode(this.bottomLabelText));
-
-      this.container.appendChild(topLabel);
       this.container.appendChild(inner);
       inner.appendChild(advert);
-      this.container.appendChild(bottomLabel);
     },
-    addMedia: function() {
-      var container = document.getElementById("inscroll-banner");
+    checkMediaType: function() {
+      this.addImage();
+    },
+    addImage: function() {
       this.media = document.createElement("img");
       this.media.setAttribute("src", this.image);
       this.media.addEventListener("load", this.appendMedia.bind(this));
     },
+    addHtml: function() {},
+    addVideo: function() {},
     addUrl: function() {
       var mediaUrl = document.createElement("a");
       mediaUrl.setAttribute("href", this.url);
@@ -108,7 +127,8 @@
     },
     apply: function() {
       this.createElements();
-      this.addMedia();
+      this.createLabels();
+      this.checkMediaType();
       this.addUrl();
     }
   };
