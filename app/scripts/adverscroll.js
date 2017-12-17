@@ -4,7 +4,6 @@
 // Comments
 // Testing
 // Setup for html
-// Setup for video
 
 // data-attribute or config
 
@@ -25,7 +24,8 @@
         throw "Only strings are accepted in configuration.";
       }
     }
-    // Insure media and url are set
+
+    // Insure mediaUrl, mediaType, and url are set
     if (
       typeof config.mediaUrl === "undefined" ||
              config.mediaUrl.trim().length === 0 ||
