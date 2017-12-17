@@ -1,4 +1,5 @@
 // @TODO
+
 // Fix multiple instances
 // Testing
 
@@ -52,8 +53,8 @@
     createContainer: function() {
       this.container = document.getElementById(this.id);
 
-      var inner = document.createElement('div');
-      inner.setAttribute('class', 'isb-banner-core');
+      var inner = document.createElement("div");
+      inner.setAttribute("class", "isb-banner-core");
       this.inner = inner;
 
       var advert = document.createElement("div");

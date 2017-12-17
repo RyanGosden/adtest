@@ -11,18 +11,18 @@ var advert1 = Adverscroll({
 });
 advert1.apply();
 
-var advert2 = Adverscroll({
-  id : "adverscroll2",
-  mediaUrl: "images/adverscroll.jpg",
-  mediaType: "image",
-  url: "www.hsbc.com.mt",
-  topLabelText: "ADVERTISEMENT",
-  bottomLabelText: "SCROLL TO CONTINUE",
-  labelBgColour: "#222",
-  labelColour: "#fff",
-  marginTop: "0",
-});
-advert2.apply();
+// var advert2 = Adverscroll({
+//   id : "adverscroll2",
+//   mediaUrl: "images/adverscroll.jpg",
+//   mediaType: "image",
+//   url: "www.hsbc.com.mt",
+//   topLabelText: "ADVERTISEMENT",
+//   bottomLabelText: "SCROLL TO CONTINUE",
+//   labelBgColour: "#222",
+//   labelColour: "#fff",
+//   marginTop: "0",
+// });
+// advert2.apply();
 //
 // var advert1 = Adverscroll({
 //   id : "adverscroll",
