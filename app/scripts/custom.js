@@ -1,6 +1,8 @@
 var advert1 = Adverscroll({
   id : "adverscroll",
-  image: "images/adverscroll.jpg",
+  mediaUrl: "images/adverscroll.jpg",
+  // mediaUrl: "images/video.mp4",
+  mediaType: "image",
   url: "www.hsbc.com.mt",
   topLabelText: "ADVERTISEMENT",
   bottomLabelText: "SCROLL TO CONTINUE",

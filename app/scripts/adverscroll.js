@@ -6,6 +6,8 @@
 // Setup for html
 // Setup for video
 
+// data-attribute or config
+
 (function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define(["adverscroll"], factory);
@@ -23,14 +25,16 @@
         throw "Only strings are accepted in configuration.";
       }
     }
-    // Insure img and url are set
+    // Insure media and url are set
     if (
-      typeof config.image === "undefined" ||
-      config.image.trim().length === 0 ||
+      typeof config.mediaUrl === "undefined" ||
+             config.mediaUrl.trim().length === 0 ||
+      typeof config.mediaType === "undefined" ||
+             config.mediaType.trim().length === 0 ||
       typeof config.url === "undefined" ||
-      config.url.trim().length === 0
+             config.url.trim().length === 0
     ) {
-      throw "Configuration requires image and URL";
+      throw "MediaUrl, MediaType and URL are required";
     }
 
     return new Adverscroll.init(config);
@@ -39,7 +43,8 @@
   Adverscroll.init = function(config) {
 
     this.id = config.id || "adverscroll";
-    this.image = config.image || "";
+    this.mediaUrl = config.mediaUrl || "";
+    this.mediaType = config.mediaType || "";
     this.url = config.url || "";
     this.topLabelText = config.topLabelText || "ADVERTISEMENT";
     this.bottomLabelText = config.bottomLabelText || "SCROLL TO CONTINUE";
@@ -49,35 +54,7 @@
   };
 
   Adverscroll.prototype = {
-    createLabels: function() {
-      var topLabel = document.createElement("div"),
-          bottomLabel = document.createElement("div"),
-          labels = [
-          {
-            el: topLabel,
-            class: "isb-label isb-label-top",
-            txt: this.topLabelText
-          },
-          {
-            el: bottomLabel,
-            class: "isb-label isb-label-bottom",
-            txt: this.bottomLabelText
-          }
-      ];
-
-      var createLabel = function(el, cls, txt) {
-        el.setAttribute("class", cls);
-        el.style.backgroundColor = this.labelBgColour;
-        el.style.color = this.labelColour;
-        el.appendChild(document.createTextNode(txt));
-        this.container.appendChild(el);
-      }.bind(this);
-
-      labels.forEach(function(label){
-          createLabel(label.el, label.class, label.txt);
-      });
-    },
-    createElements: function() {
+    createContainer: function() {
       this.container = document.getElementById(this.id);
 
       var inner = document.createElement("div");
@@ -93,25 +70,73 @@
       this.container.appendChild(inner);
       inner.appendChild(advert);
     },
+    createLabels: function() {
+      var topLabel = document.createElement("div"),
+          bottomLabel = document.createElement("div"),
+          labels = [
+            {
+              el: topLabel,
+              class: "isb-label isb-label-top",
+              txt: this.topLabelText
+            },
+            {
+              el: bottomLabel,
+              class: "isb-label isb-label-bottom",
+              txt: this.bottomLabelText
+            }
+          ];
+
+      var createLabel = function(el, cls, txt) {
+        el.setAttribute("class", cls);
+        el.style.backgroundColor = this.labelBgColour;
+        el.style.color = this.labelColour;
+        el.appendChild(document.createTextNode(txt));
+        this.container.appendChild(el);
+      }.bind(this);
+
+      labels.forEach(function(label){
+          createLabel(label.el, label.class, label.txt);
+      });
+    },
     checkMediaType: function() {
-      this.addImage();
+      switch(this.mediaType) {
+        case "image":
+          this.addImage();
+          break;
+        case "video":
+          this.addVideo();
+          break;
+        case "html":
+          this.addIframe();
+          break;
+      }
     },
     addImage: function() {
-      this.media = document.createElement("img");
-      this.media.setAttribute("src", this.image);
-      this.media.addEventListener("load", this.appendMedia.bind(this));
+      var media = document.createElement("img");
+      media.src = this.mediaUrl;
+      media.addEventListener("load", this.appendMedia(media));
+      this.addUrl();
     },
-    addHtml: function() {},
-    addVideo: function() {},
+    addVideo: function() {
+      var media = document.createElement("video"),
+          source = document.createElement("source");
+
+      source.type = "video/mp4";
+      source.src = this.mediaUrl;
+      media.appendChild(source);
+      media.setAttribute("controls", "controls");
+      media.addEventListener("load", this.appendMedia(media).bind(this));
+    },
+    addIframe: function() {},
     addUrl: function() {
-      var mediaUrl = document.createElement("a");
-      mediaUrl.setAttribute("href", this.url);
-      mediaUrl.setAttribute("target", "_blank");
-      mediaUrl.setAttribute("class", "isb-link");
-      this.advert.appendChild(mediaUrl);
+      var url = document.createElement("a");
+      url.href = this.url;
+      url.target = "_blank";
+      url.setAttribute("class", "isb-link");
+      this.advert.appendChild(url);
     },
-    appendMedia: function() {
-      this.advert.appendChild(this.media);
+    appendMedia: function(media) {
+      this.advert.appendChild(media);
       this.enableScrollEvent();
       this.render();
     },
@@ -126,10 +151,9 @@
         "rect(" + pos.top + "px,100vw," + pos.bottom + "px,0)";
     },
     apply: function() {
-      this.createElements();
+      this.createContainer();
       this.createLabels();
       this.checkMediaType();
-      this.addUrl();
     }
   };
 
