@@ -54,22 +54,14 @@
 
             var inner = document.createElement('div');
             inner.setAttribute('class', 'isb-inner');
-            // this.inner = inner;
 
             var clipper = document.createElement('div');
             clipper.setAttribute('class', 'isb-clipper');
-            //this.clipper = clipper;
 
             var content = document.createElement('div');
             content.setAttribute('class', 'isb-content');
             this.content = content;
 
-            // var advert = document.createElement('div');
-            // advert.setAttribute('class', 'isb-banner-advert');
-            // if (this.marginTop !== 0) {
-            //     advert.style.marginTop = this.marginTop + 'px';
-            // }
-            // this.advert = advert;
             this.container.appendChild(inner);
             inner.appendChild(clipper);
             clipper.appendChild(this.content);
@@ -115,6 +107,9 @@
         addImage: function() {
             var media = document.createElement('img');
             media.src = this.mediaUrl;
+            if (this.marginTop !== 0) {
+                media.style.marginTop = this.marginTop + 'px';
+            }
             media.addEventListener('load', this.appendMedia(media));
             this.addUrl();
         },
@@ -123,11 +118,10 @@
             url.href = this.url;
             url.target = '_blank';
             url.setAttribute('class', 'isb-link');
-            this.advert.appendChild(url);
+            this.content.appendChild(url);
         },
         appendMedia: function(media) {
-            this.container.appendChild(media);
-            // this.enableScrollEvent();
+            this.content.appendChild(media);
         },
         apply: function() {
             this.createContainer();

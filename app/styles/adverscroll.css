@@ -1,14 +1,14 @@
 .isb-inscroll-banner {
     position: relative;
-    min-height: 481px
+    min-height: 100vh;
+    margin: 20px -10px 20px -10px;
 }
 
 .isb-inner {
     overflow: hidden;
     display: block;
-    background: rgb(255, 255, 255);
     width: 100%;
-    height: 481px;
+    height: 100vh;
     position: absolute;
     left: auto;
     right: auto;
@@ -86,6 +86,11 @@
     bottom: 0px;
     transform: translateZ(0px);
 }
+
+.isb-content img {
+  width:100%;
+ }
+
 
 /*.isb-inner-content {*/
     /*overflow: hidden;*/
